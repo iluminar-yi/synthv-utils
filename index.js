@@ -1,14 +1,14 @@
 'use strict';
 
-const [filename, ...params] = process.argv;
+const [_1, _2, filename, ...params] = process.argv;
 
 if (!filename) {
     console.error('No filename specified!');
     process.exit(1);
 }
 
-const {load, save} = require('src/prettify-json')();
-const removeParams = require('src/remove-params');
+const {load, save} = require('./src/prettify-json')({});
+const removeParams = require('./src/remove-params');
 
 const dataPromise = load(filename);
 

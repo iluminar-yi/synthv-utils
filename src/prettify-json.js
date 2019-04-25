@@ -10,11 +10,11 @@ module.exports = (config) => {
             throw new Error('File does not exist: ' + filename);
         }
 
-        return fs.promises.read(filename).then(JSON.parse);
+        return fs.promises.readFile(filename).then(JSON.parse);
     };
 
     const save = (data, filename) => {
-        return fs.promises.writeFile(filename, JSON.stringify(data, null, indent || 2));
+        return fs.promises.writeFile(filename, JSON.stringify(data, null, indent || 2) + '\n');
     };
 
     return {load, save};
