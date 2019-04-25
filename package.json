@@ -1,0 +1,25 @@
+{
+  "name": "synthv-utils",
+  "version": "0.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iluminar-yi/synthv-utils.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iluminar-yi/synthv-utils/issues"
+  },
+  "homepage": "https://github.com/iluminar-yi/synthv-utils#readme",
+  "devDependencies": {
+    "@types/node": "^10.14.5",
+    "typescript": "^3.4.5"
+  }
+}
