@@ -1,6 +1,6 @@
 'use strict';
 
-const [_1, _2, configFilePath, ...processorNames] = process.argv;
+const [, , configFilePath, ...processorNames] = process.argv;
 
 if (!configFilePath) {
     console.error('Please specify configFilePath');
@@ -19,14 +19,21 @@ const fs = require('fs');
         }
     })();
 
-    const {load, save} = require('./src/prettify-json')(config['prettify-json']);
+    console.debug(`Processors to run: ${processorNames}`);
+    console.debug(`Config: \n${JSON.stringify(config, null, 2)}`);
 
+    const getProcessor = (processorName) => require(`./src/${processorName}`)(config[processorName]);
+    const {load, save} = getProcessor('prettify-json');
+
+    console.info('Loading data from file');
     let data = await load();
     if (processorNames.length) {
         for (const processorName of processorNames) {
+            console.info(`Will run processor ${processorName}`);
             try {
-                const nextProcessor = require(`./src/${processorName}`)(config[processorName]);
+                const nextProcessor = getProcessor(processorName);
                 data = await nextProcessor(data);
+                console.info(`Done running processor ${processorName}`);
             } catch (e) {
                 console.error(`Failed to load processor ${processorName}`, e);
             }
@@ -35,5 +42,6 @@ const fs = require('fs');
         console.warn('No other utils to run!');
     }
 
+    console.info('Saving data to file');
     save(data);
 })();

@@ -3,6 +3,12 @@
 const emptyParameter = [0, 0];
 
 module.exports = (config) => {
+    const {enabled} = config;
+    if (!enabled) {
+        console.debug('Processor disabled in config, skipping');
+        return (data) => data;
+    }
+
     const shouldAddNoteNumberToComment = config['add-note-number'];
 
     return (data) => {
