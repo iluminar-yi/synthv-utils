@@ -1,0 +1,6 @@
+# Logs
+logs
+*.log
+
+# NPM
+node_modules/
