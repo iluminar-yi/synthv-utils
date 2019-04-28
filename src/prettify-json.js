@@ -3,18 +3,18 @@
 const fs = require('fs');
 
 module.exports = (config) => {
-    const {indent} = config;
+    const {indent, input, output} = config;
 
-    const load = (filename) => {
-        if (!fs.existsSync(filename)) {
-            throw new Error('File does not exist: ' + filename);
+    const load = () => {
+        if (!fs.existsSync(input)) {
+            throw new Error('File does not exist: ' + input);
         }
 
-        return fs.promises.readFile(filename).then(JSON.parse);
+        return fs.promises.readFile(input).then(JSON.parse);
     };
 
-    const save = (data, filename) => {
-        return fs.promises.writeFile(filename, JSON.stringify(data, null, indent || 2) + '\n');
+    const save = (data) => {
+        return fs.promises.writeFile(output, JSON.stringify(data, null, indent || 2) + '\n');
     };
 
     return {load, save};

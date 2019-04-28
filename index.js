@@ -1,29 +1,39 @@
 'use strict';
 
-const [_1, _2, filename, ...params] = process.argv;
+const [_1, _2, configFilePath, ...processorNames] = process.argv;
 
-if (!filename) {
-    console.error('No filename specified!');
+if (!configFilePath) {
+    console.error('Please specify configFilePath');
     process.exit(1);
 }
 
-const {load, save} = require('./src/prettify-json')({});
-const removeParams = require('./src/remove-params')({});
+const fs = require('fs');
 
-let dataPromise = load(filename);
-
-if (params.length) {
-    for (let param of params) {
-        switch (param) {
-            case 'remove-params':
-                dataPromise = dataPromise.then(removeParams);
-                break;
-            default:
-                console.error(`Unrecoginized param: ${param}`);
+(async () => {
+    const configFileBuffer = await fs.promises.readFile(configFilePath);
+    const config = (() => {
+        try {
+            return JSON.parse(configFileBuffer);
+        } catch (e) {
+            return {};
         }
-    }
-} else {
-    console.warn('No other utils to run!');
-}
+    })();
 
-dataPromise.then((data) => save(data, filename));
+    const {load, save} = require('./src/prettify-json')(config['prettify-json']);
+
+    let data = await load();
+    if (processorNames.length) {
+        for (const processorName of processorNames) {
+            try {
+                const nextProcessor = require(`./src/${processorName}`)(config[processorName]);
+                data = await nextProcessor(data);
+            } catch (e) {
+                console.error(`Failed to load processor ${processorName}`, e);
+            }
+        }
+    } else {
+        console.warn('No other utils to run!');
+    }
+
+    save(data);
+})();
