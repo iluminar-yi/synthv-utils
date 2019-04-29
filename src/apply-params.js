@@ -19,11 +19,7 @@ module.exports = (config) => {
             const paramValues = trackDef['values'];
             const numValues = result.tracks[trackNum].parameters.interval;
             paramValues.forEach(({param, value}) => {
-                const paramArr = result.tracks[trackNum].parameters[param] = [];
-                for (let i = 0; i < numValues; i++) {
-                    paramArr.push(i);
-                    paramArr.push(value);
-                }
+                result.tracks[trackNum].parameters[param] = [0, value, numValues, value];
             });
         });
         return result;
