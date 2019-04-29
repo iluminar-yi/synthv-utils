@@ -1,0 +1,36 @@
+{
+  "prettify-json": {
+    "input": "../my-synthv-project/MyProject.s5p",
+    "output": "../my-synthv-project/MyProject.s5p",
+    "indent": 2
+  },
+  "remove-params": {
+    "enabled": true
+  },
+  "apply-params": {
+    "enabled": true,
+    "tracks": [
+      {
+        "track": 0,
+        "values": [
+          {
+            "param": "gender",
+            "value": -0.1
+          },
+          {
+            "param": "tension",
+            "value": -0.15
+          },
+          {
+            "param": "voicing",
+            "value": -0.2
+          },
+          {
+            "param": "breathiness",
+            "value": -0.5
+          }
+        ]
+      }
+    ]
+  }
+}
