@@ -3,18 +3,25 @@
 const emptyParameter = [0, 0];
 
 module.exports = (config) => {
-    const {enabled} = config;
+    const {enabled, excludes = []} = config;
     if (!enabled) {
         console.debug('Processor disabled in config, skipping');
         return (data) => data;
     }
+    excludes.forEach((exclude) => {
+        exclude.tracks = new Set(exclude.tracks);
+    });
 
     const shouldAddNoteNumberToComment = config['add-note-number'];
 
     return (data) => {
         const result = JSON.parse(JSON.stringify(data));
 
-        result.tracks.forEach(track => {
+        result.tracks.forEach((track, index) => {
+            const trackExcludeParamNames = excludes
+                .filter((exclude) => exclude.tracks.has(index))
+                .map((exclude) => exclude.param);
+
             track.dbDefaults = {};
 
             track.notes = track.notes.map((note, index) => {
@@ -33,7 +40,9 @@ module.exports = (config) => {
                 }
             });
 
-            track.parameters = {interval, pitchDelta, vibratoEnv, loudness, tension, breathiness, voicing, gender};
+            const newParams = {interval, pitchDelta, vibratoEnv, loudness, tension, breathiness, voicing, gender};
+            trackExcludeParamNames.forEach((trackExcludeParamName) => newParams[trackExcludeParamName] = track.parameters[trackExcludeParamName]);
+            track.parameters = newParams;
         });
 
         return result;

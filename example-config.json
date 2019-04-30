@@ -5,7 +5,15 @@
     "indent": 2
   },
   "remove-params": {
-    "enabled": true
+    "enabled": true,
+    "excludes": [
+      {
+        "param": "pitchDelta",
+        "tracks": [
+          0
+        ]
+      }
+    ]
   },
   "apply-params": {
     "enabled": true,
