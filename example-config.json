@@ -22,20 +22,33 @@
         "track": 0,
         "values": [
           {
+            "enabled": false,
             "param": "gender",
-            "value": -0.1
+            "value": -0.1,
+            "method": "overwrite"
           },
           {
+            "enabled": true,
             "param": "tension",
-            "value": -0.15
+            "value": -0.15,
+            "method": "unmodified-only"
           },
           {
+            "enabled": false,
             "param": "voicing",
-            "value": -0.2
+            "value": -0.2,
+            "method": "unmodified-only"
           },
           {
+            "enabled": false,
             "param": "breathiness",
-            "value": -0.5
+            "value": -0.5,
+            "method": "shift"
+          },
+          {
+            "enabled": false,
+            "param": "sublib",
+            "value": "B3"
           }
         ]
       }
