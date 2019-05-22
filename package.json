@@ -8,8 +8,9 @@
     "start": "electron-webpack dev",
     "clean": "rm -r dist",
     "compile": "electron-webpack",
-    "dist": "npm run compile && electron-builder -wm",
-    "dist:dir": "npm run compile && electron-builder -wm --dir",
+    "dist:all": "npm run compile && electron-builder -wm",
+    "dist:win": "npm run compile && electron-builder -w",
+    "dist:mac": "npm run compile && electron-builder -m",
     "lint": "eslint ."
   },
   "repository": {
