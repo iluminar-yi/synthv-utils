@@ -4,3 +4,6 @@ logs
 
 # NPM
 node_modules/
+
+# Build Ouput
+dist

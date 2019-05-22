@@ -1,25 +1,69 @@
 {
   "name": "synthv-utils",
-  "version": "0.0.0",
-  "description": "",
+  "productName": "synthv-utils",
+  "version": "1.0.0",
+  "description": "Electron Forge with Webpack and Typescript",
   "private": true,
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron-webpack dev",
+    "clean": "rm -r dist",
+    "compile": "electron-webpack",
+    "dist": "npm run compile && electron-builder -wm",
+    "dist:dir": "npm run compile && electron-builder -wm --dir",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iluminar-yi/synthv-utils.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Iluminar",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/iluminar-yi/synthv-utils/issues"
   },
   "homepage": "https://github.com/iluminar-yi/synthv-utils#readme",
+  "build": {
+    "asar": true,
+    "compression": "maximum",
+    "dmg": {
+      "format": "ULFO"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": "x64"
+        }
+      ]
+    },
+    "mac": {
+      "identity": null,
+      "target": [
+        {
+          "target": "dmg",
+          "arch": "x64"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "source-map-support": "^0.5.10"
+  },
   "devDependencies": {
-    "@types/node": "^10.14.5",
-    "typescript": "^3.4.5"
+    "@types/react": "^16.8.18",
+    "@types/react-dom": "16.8.4",
+    "@typescript-eslint/eslint-plugin": "^1.9.0",
+    "@typescript-eslint/parser": "^1.9.0",
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2",
+    "electron-webpack": "^2.6.2",
+    "electron-webpack-eslint": "^4.0.2",
+    "electron-webpack-ts": "^3.2.0",
+    "typescript": "^3.4.5",
+    "webpack": "^4.32.1"
   }
 }

@@ -37,7 +37,7 @@ module.exports = (config) => {
             const {pitchDelta, vibratoEnv, loudness, tension, breathiness, voicing, gender} = new Proxy({}, {
                 get() {
                     return emptyParameter
-                }
+                },
             });
 
             const newParams = {interval, pitchDelta, vibratoEnv, loudness, tension, breathiness, voicing, gender};
