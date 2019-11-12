@@ -32,17 +32,22 @@ const applyParam = (oldValues, newValue, lastIndex, method) => {
     switch (method) {
         case 'shift':
             const difference = oldValue - newValue;
-            return oldValues.map((oldVal, index, oldVals) => {
+            const newValues = oldValues.map((oldVal, index, oldVals) => {
                 if (index % 2 === 0) {
                     // This is index value
                     return oldVal;
-                } else if (index === oldVals.length - 1) {
+                } else if (index === oldVals.length - 1 && index !== 1) {
                     // Always make last value 0
                     return 0;
                 } else {
                     return shortenNumericValue(oldVal - difference);
                 }
             });
+            if (difference && newValues.length === 2) {
+                return [...newValues, lastIndex, 0];
+            } else {
+                return newValues;
+            }
         case 'overwrite':
             return [0, newValue, lastIndex, 0];
         case 'unmodified-only':
@@ -99,7 +104,7 @@ const shortenNumericValue = (value) => {
     return parseFloat(value.toFixed(numDecimalPlaces));
 };
 
-module.exports = (config) => {
+module.exports = (config = {enabled: false}) => {
     const {enabled, tracks} = config;
     if (!enabled) {
         console.debug('Processor disabled in config, skipping');

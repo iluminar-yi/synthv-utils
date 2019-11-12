@@ -8,6 +8,7 @@ if (!configFilePath) {
 }
 
 const fs = require('fs');
+const path = require('path');
 
 (async () => {
     const configFileBuffer = await fs.promises.readFile(configFilePath);
@@ -21,8 +22,11 @@ const fs = require('fs');
 
     console.debug(`Processors to run: ${processorNames}`);
     console.debug(`Config: \n${JSON.stringify(config, null, 2)}`);
+    const globalOptions = {
+        baseDirectory: path.dirname(configFilePath)
+    };
 
-    const getProcessor = (processorName) => require(`./src/${processorName}`)(config[processorName]);
+    const getProcessor = (processorName) => require(`./src/${processorName}`)(config[processorName], globalOptions);
     const {load, save} = getProcessor('prettify-json');
 
     console.info('Loading data from file');

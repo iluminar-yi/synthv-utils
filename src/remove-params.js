@@ -2,7 +2,7 @@
 
 const emptyParameter = [0, 0];
 
-module.exports = (config) => {
+module.exports = (config = {enabled: false}) => {
     const {enabled, excludes = []} = config;
     if (!enabled) {
         console.debug('Processor disabled in config, skipping');
